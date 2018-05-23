@@ -13,18 +13,7 @@
    {:before-load app.core/stop
     :after-load app.core/start
     :http-root "public"
-    :http-port 8020}}}}
- ;  {:dev}}}
-   ; {:target    :node-script ; single stand-alone .cljs file compiled to run using node
-    ; :main      tweets.core/main ; req'd namespace-qualified symbol of entry fn
-    ; :output-dir "public/cli" ; optional file path for dev mode
-    ; :output-to "public/cli/script.js"}}} ; req'd path and filename for generated script
-    ; :devtools}}}
-   ;  {:before-load-async tweets.cli/stop
-   ;   :after-load tweets.cli/start}}
-   ; :script
-   ; {:target   :node-script
-   ;  :output-to "public/cli/script.js"
-   ;  :main      tweets.cli/main}}}
+    :http-port 8020}}
+  {:target     :node}}}
 
 ; see command line commands: https://shadow-cljs.github.io/docs/UsersGuide.html#_command_line
