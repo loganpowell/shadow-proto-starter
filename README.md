@@ -84,15 +84,43 @@ Hit `shift+enter` and you should see `3` in the REPL. If you got that, congrats!
 
 ## Project Deployment Targets
 
-There are - count'em - **THREE** `:target`s you can set Shadow for:
+There are a number of `:target`s [you can set](https://shadow-cljs.github.io/docs/UsersGuide.html#_build_target) Shadow for.
 
-1) The `:browser` Target ([Documentation](https://shadow-cljs.github.io/docs/UsersGuide.html#target-browser))
-2) The `:npm-module` Target ([Documentation](https://shadow-cljs.github.io/docs/UsersGuide.html#target-npm-module))
-3) The `:node-script` Target ([Documentation](https://shadow-cljs.github.io/docs/UsersGuide.html#target-node-script))
+Each build in shadow-cljs must define a `:target` which defines where you intend your code to be executed. There are default built-ins for the browser and node.js. They all share the basic concept of having :dev and :release modes. :dev mode provides all the usual development goodies like fast compilation, live code reloading and a REPL. :release mode will produce optimized output intended for production.
+
+Targets are covered in separate chapters.
+
+Here are some of them:
+
+[:browser](https://shadow-cljs.github.io/docs/UsersGuide.html#target-browser)
+Output code suitable for running in a web browser.
+
+[:bootstrap](https://shadow-cljs.github.io/docs/UsersGuide.html#target-bootstrap)
+Output code suitable for running in bootstrapped cljs environment.
+
+[:browser-test](https://shadow-cljs.github.io/docs/UsersGuide.html#target-browser-test)
+Scan for tests to determine required files, and output tests suitable for running in the browser.
+
+[:karma](https://shadow-cljs.github.io/docs/UsersGuide.html#target-karma)
+Scan for tests to determine required files, and output karma-runner compatible tests. See Karma.
+
+[:node-library](https://shadow-cljs.github.io/docs/UsersGuide.html#target-node-library)
+Output code suitable for use as a node library.
+
+[:node-script](https://shadow-cljs.github.io/docs/UsersGuide.html#target-node-script)
+Output code suitable for use as a node script.
+
+[:npm-module](https://shadow-cljs.github.io/docs/UsersGuide.html#target-npm-module)
+Output code suitable for use as an NPM module.
 
 This means that you can - with Shadow - deploy an app, a node module or a simple node script without ever leaving Shadow. Also, perhaps in the not too distant future, you may see [React Native](https://github.com/shadow-cljs/expo-test) on the list!
 
-### Setting up the Project for Building a Web Application
+We are going to cover two of these:
+
+1) Web Applications
+2) Node Modules
+
+### 1) Setting up the Project for Building a Web Application
 
 Let's setup a project for building a web app! If you'd like to see more configuration notes, please check out [this entry](https://github.com/thheller/shadow-cljs/wiki/Production-Builds) in the shadow github.
 
