@@ -1,0 +1,15 @@
+{
+  "name": "shadow-proto-starter",
+  "version": "0.0.1",
+  "description": "shadow-cljs starter setup for proto-repl and atom",
+  "main": "index.js",
+  "scripts": {
+    "dev": "shadow-cljs watch app",
+    "release": "shadow-cljs release app"
+  },
+  "author": "Logan Powell",
+  "license": "ISC",
+  "devDependencies": {
+    "shadow-cljs": "^2.3.23"
+  }
+}
