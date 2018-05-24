@@ -2,7 +2,7 @@
 
 (defn hello [& cli-args]
   (prn "hello world"))
-(prn "Hey from proto-repl!")
+(prn "Hey from node!")
 
 ; (defn stop []
 ;   (prn "Stopping..."))

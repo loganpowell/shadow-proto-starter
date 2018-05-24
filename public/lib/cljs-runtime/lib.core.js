@@ -2,14 +2,14 @@ goog.provide('lib.core');
 goog.require('cljs.core');
 lib.core.hello = (function lib$core$hello(var_args){
 var args__4502__auto__ = [];
-var len__4499__auto___24895 = arguments.length;
-var i__4500__auto___24896 = (0);
+var len__4499__auto___23853 = arguments.length;
+var i__4500__auto___23854 = (0);
 while(true){
-if((i__4500__auto___24896 < len__4499__auto___24895)){
-args__4502__auto__.push((arguments[i__4500__auto___24896]));
+if((i__4500__auto___23854 < len__4499__auto___23853)){
+args__4502__auto__.push((arguments[i__4500__auto___23854]));
 
-var G__24897 = (i__4500__auto___24896 + (1));
-i__4500__auto___24896 = G__24897;
+var G__23855 = (i__4500__auto___23854 + (1));
+i__4500__auto___23854 = G__23855;
 continue;
 } else {
 }
@@ -27,11 +27,11 @@ return cljs.core.prn.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.clj
 lib.core.hello.cljs$lang$maxFixedArity = (0);
 
 /** @this {Function} */
-lib.core.hello.cljs$lang$applyTo = (function (seq24894){
+lib.core.hello.cljs$lang$applyTo = (function (seq23852){
 var self__4487__auto__ = this;
-return self__4487__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq24894));
+return self__4487__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq23852));
 });
 
-cljs.core.prn.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["Hey from proto-repl!"], 0));
+cljs.core.prn.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["Hey from node!"], 0));
 
 //# sourceMappingURL=lib.core.js.map

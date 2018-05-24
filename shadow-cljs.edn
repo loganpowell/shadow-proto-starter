@@ -13,8 +13,10 @@
  {:lib {:target     :node-library
         :output-dir "public/lib"
         :output-to "public/lib/library.js"
+        :compiler-options {:pretty-print true}
         :exports {:hello lib.core/hello}}}}
-        ; :modules {:main {:entries [lib.core]}
+        ; :exports lib.core/hello}}} ;; single export format
+        ; :modules {:main {:entries [lib.core]}}}}}
         ;           :devtools {:before-load lib.core/stop
         ;                      :after-load lib.core/start}}}}}
 

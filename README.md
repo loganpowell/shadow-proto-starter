@@ -12,10 +12,7 @@ For `:devtools`
 ```
 (shadow.cljs.devtools.api/nrepl-select :<your build>)
 ```
-To `:watch`
-```
-(shadow.cljs.devtools.api/watch :<your build>)
-```
+
 # Prerequisites
 
 ## ProtoREPL in Atom
@@ -220,6 +217,8 @@ whose file structure should look like this:
         └── core.cljs
 ```
 
+Notice that the folder structure must mimic the `:entries` namespace. The convention being that the highest level namespace (`app`) is a folder right below the `src` path and first child namespaces (`core`) is directly under the highest level namespace (`app.core` = `app/core`).
+
 2) You can find out more about these settings in [the documentation](https://shadow-cljs.github.io/docs/UsersGuide.html#target-browser)
 
 
@@ -285,10 +284,10 @@ Starting...                         core.cljs:16
 
 Once you've connected to the browser input into ProtoREPL in Atom:
 
+```clj
+(shadow.cljs.devtools.api/nrepl-select :app) ;; :app = build id
 ```
-(shadow.cljs.devtools.api/nrepl-select :app)
-```
-(Here `:app` is the name of your `:build`)
+(Here `:app` is the name in your `:builds` map)
 
 You should see this printed in the REPL:
 
@@ -398,7 +397,7 @@ Now we should be able to restart our shadow in our terminal:
 npm run dev
 ```
 
-Execute the block of code using ProtoREPL:
+Execute the block of code using ProtoREPL (`ctrl+, b`/`ctrl+alt, b`):
 
 ```clj
 (prn "Hey from proto-repl!")
@@ -410,27 +409,20 @@ Now, in your terminal, you should be able to open the file (`library.js` in this
 
 ## Testing the cljs-runtime
 
-Now, in your terminal, jump up a folder into your `cljs-runtime` folder. The path in this case is:
-```
-...public\lib\cljs-runtime
-```
-and just use the `node` command to start the runtime.
+Now, let's check to ensure everything's in order for access via Node...
 
-You should immediately see `"Hey from proto-repl!"`, but - also - we can use our compiled JavaScript from node!
+Change your "super basic" `lib/core.cljs` file to:
 
-```js
-$ cd lib/cljs-runtime
-$ node
-> var x = require('./lib');
-undefined
-> x.hello()
-hello
-'hello world'
+```clj
+(ns lib.core)
+
+(defn hello [& cli-args]
+  (prn "hello world"))
+
+(prn "Hey from nodel!")
 ```
 
-If you got this far, you're ready to rock on your new Node Library! WOOT!
-
-### Notes:
+### File Structure:
 
 1) `:build` setup is structured like this:
 ```clj
@@ -438,6 +430,7 @@ If you got this far, you're ready to rock on your new Node Library! WOOT!
  {:lib {:target     :node-library
         :output-dir "public/lib"
         :output-to "public/lib/library.js"
+        :compiler-options {:pretty-print true}
         :exports {:hello lib.core/hello}}}}
 ```
 
@@ -450,3 +443,43 @@ whose file structure should look like this:
     └── lib
         └── core.cljs
 ```
+
+As with other build setups, the folder structure must mimic the namespace. In this case the `:exports` namespace (`lib`) is a folder right below the `src` path and first child namespaces (`core`) is directly under the highest level namespace (`lib.core` = `lib/core`). Also, note that `:hello` is the exported object from the namespace `lib.core/hello`. This is how you will `require` this library in your JavaScript projects. I.e.: `var x = require(')`
+
+The :exports map maps CLJS vars to the name they should be exported to.
+
+Now, in your terminal, jump up a folder into your `public\lib` folder and just use the `node` command to start the runtime.
+
+```js
+$ cd lib/cljs-runtime
+$ node
+
+> var x = require('./library.js');
+"Hey from node!"
+undefined
+```
+You should see `"Hey from node!"`, which we `prn`ted from within the namespace, but - also - we can use our compiled JavaScript from node!
+
+```js
+> var x = require('./library.js');
+"Hey from node!"
+undefined
+> x.hello()
+hello
+'hello world'
+```
+
+If you got this far, you're ready to rock on your new Node Library! WOOT! You can use the compiled code from any JavaScript program just like a regular `module.export` :)
+
+### Using ProtoREPL
+
+As with other builds, you can leverage the awesome REPL-driven-development style of clojurescript by waking up ProtoREPL:
+
+1) In Atom, fire up your Remote ProtoREPL server (`ctrl, y`/`ctrl+al, y` or search in your [Atom Command Pallet](https://flight-manual.atom.io/getting-started/sections/atom-basics/) for `ProtoREPL: Remote nRepl Connection` using `ctrl+shift+p`) and connect to your localhost at your port (3333 in this case).
+2) When ProtoREPL pops up, eval: `(shadow.cljs.devtools.api/nrepl-select :lib)` and you're up and running your interactive Node environment!
+
+If you still have your `node` session running (via `...require('./library')` in this case) in your terminal, when you eval a block of code in your project (`ctrl+b`), you should see the result both in ProtoREPL as well as in your terminal.
+
+## JavaScript Exports Elaborated
+
+[source](https://shadow-cljs.github.io/docs/UsersGuide.html#_exports)
