@@ -9,7 +9,7 @@ license: 'public-domain'
 
 # Introduction
 
-`shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates fully with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that [the author](https://github.com/thheller) (and [contributors](https://github.com/thheller/shadow-cljs/graphs/contributors) - one of which [inspired me](https://medium.com/@jiyinyiyong/clojurians-please-share-your-knowledges-with-blogs-c674503f54a) to write this up) of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
+`shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates seamlessly with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that [the author](https://github.com/thheller) (and [contributors](https://github.com/thheller/shadow-cljs/graphs/contributors) - one of which [inspired me](https://medium.com/@jiyinyiyong/clojurians-please-share-your-knowledges-with-blogs-c674503f54a) to write this up) of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
 
 ## Convenience REPL references
 
@@ -49,7 +49,7 @@ As mentioned in [the shadow docs](https://shadow-cljs.github.io/docs/UsersGuide.
 
 No, we don't want that.
 
-In the `shadow-cljs.edn` file add `[proto-repl "0.3.1"]` to the `:dependencies` and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). It should look like this:
+In the root directory of your project, create a `shadow-cljs.edn` file add `[proto-repl "0.3.1"]` to the `:dependencies` and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). It should look like this:
 ```clj
 {:source-paths ["src"]
  :dependencies [[proto-repl "0.3.1"]]
@@ -496,3 +496,8 @@ If you still have your `node` session running (via `...require('./library')` in 
 ## JavaScript Exports Elaborated
 
 [source](https://shadow-cljs.github.io/docs/UsersGuide.html#_exports)
+
+Next Steps:
+If you’ve never touched clojure(script) before, get started right away with some [koans](http://clojurescriptkoans.com/)!
+
+Or, play with your freshly minted learning environment by cloning some [practice examples](https://github.com/joakin/diving-into-clojurescript-exercises).
