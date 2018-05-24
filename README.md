@@ -407,7 +407,7 @@ And you should see: `"Hey from proto-repl!"` in ProtoREPL.
 
 Now, in your terminal, you should be able to open the file (`library.js` in this case) in the `:output-to` directory (`public/lib` in this case) by using `Node library` and see `"Hey from proto-repl!"` there as well.
 
-## Testing the cljs-runtime
+## Testing in Node
 
 Now, let's check to ensure everything's in order for access via Node...
 
