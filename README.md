@@ -465,8 +465,8 @@ You should see `"Hey from node!"`, which we `prn`ted from within the namespace, 
 "Hey from node!"
 undefined
 > x.hello()
-hello
 'hello world'
+null
 ```
 
 If you got this far, you're ready to rock on your new Node Library! WOOT! You can use the compiled code from any JavaScript program just like a regular `module.export` :)
