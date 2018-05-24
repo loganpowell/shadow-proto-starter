@@ -320,7 +320,7 @@ Under the `src` folder, create a new folder: `lib`
 Then, within that folder we'll create another `core.cljs` and add this to the file:
 
 ```clj
-(ns census.lib)
+(ns lib.core)
 
 (defn hello [& cli-args]
   (prn "hello world"))
@@ -411,7 +411,7 @@ Now, in your terminal, you should be able to open the file (`library.js` in this
 
 Now, let's check to ensure everything's in order for access via Node...
 
-Change your "super basic" `lib/core.cljs` file to:
+Change your "super basic" `lib/core.cljs` file for testing in Node:
 
 ```clj
 (ns lib.core)
@@ -419,7 +419,7 @@ Change your "super basic" `lib/core.cljs` file to:
 (defn hello [& cli-args]
   (prn "hello world"))
 
-(prn "Hey from nodel!")
+(prn "Hey from node!")
 ```
 
 ### File Structure:
@@ -448,7 +448,7 @@ As with other build setups, the folder structure must mimic the namespace. In th
 
 The :exports map maps CLJS vars to the name they should be exported to.
 
-Now, in your terminal, jump up a folder into your `public\lib` folder and just use the `node` command to start the runtime.
+Now, in a new tab/window in your terminal, jump into your `public\lib` folder and just use the `node` command to start the runtime.
 
 ```js
 $ cd lib/cljs-runtime
@@ -475,7 +475,7 @@ If you got this far, you're ready to rock on your new Node Library! WOOT! You ca
 
 As with other builds, you can leverage the awesome REPL-driven-development style of clojurescript by waking up ProtoREPL:
 
-1) In Atom, fire up your Remote ProtoREPL server (`ctrl, y`/`ctrl+al, y` or search in your [Atom Command Pallet](https://flight-manual.atom.io/getting-started/sections/atom-basics/) for `ProtoREPL: Remote nRepl Connection` using `ctrl+shift+p`) and connect to your localhost at your port (3333 in this case).
+1) In Atom, fire up your Remote ProtoREPL server (`ctrl, y`/`ctrl+al, y`) or search in your [Atom Command Pallet](https://flight-manual.atom.io/getting-started/sections/atom-basics/) for `ProtoREPL: Remote nRepl Connection` using `ctrl+shift+p`) and connect to your localhost at your port (3333 in this case).
 2) When ProtoREPL pops up, eval: `(shadow.cljs.devtools.api/nrepl-select :lib)` and you're up and running your interactive Node environment!
 
 If you still have your `node` session running (via `...require('./library')` in this case) in your terminal, when you eval a block of code in your project (`ctrl+b`), you should see the result both in ProtoREPL as well as in your terminal.
