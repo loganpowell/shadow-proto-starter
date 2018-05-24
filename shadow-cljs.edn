@@ -2,18 +2,20 @@
  :dependencies [[proto-repl "0.3.1"]]
  :nrepl {:port 3333}
  :builds
- {:app
-  {:target     :browser
-   :output-dir "public/js"
-   :asset-path "js"
-   :modules
-   {:main
-    {:entries [app.core]}}
-   :devtools
-   {:before-load app.core/stop
-    :after-load app.core/start
-    :http-root "public"
-    :http-port 8020}}
-  {:target     :node}}}
+ ; {:app  {:target     :browser
+ ;         :output-dir "public/js"
+ ;         :asset-path "js"
+ ;         :modules {:main {:entries [app.core]}
+ ;                   :devtools {:before-load app.core/stop
+ ;                              :after-load app.core/start
+ ;                              :http-root "public"
+ ;                              :http-port 8020}}}}
+ {:lib {:target     :node-library
+        :output-dir "public/lib"
+        :output-to "public/lib/library.js"
+        :exports {:hello lib.core/hello}}}}
+        ; :modules {:main {:entries [lib.core]}
+        ;           :devtools {:before-load lib.core/stop
+        ;                      :after-load lib.core/start}}}}}
 
 ; see command line commands: https://shadow-cljs.github.io/docs/UsersGuide.html#_command_line

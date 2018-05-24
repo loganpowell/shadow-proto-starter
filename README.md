@@ -1,19 +1,33 @@
-## Steps to setup
-1) Setup ProtoREPL in atom
-2) Provision `shadow-cljs.edn` file
+# Introduction
 
-## Prerequisites
+`shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates fully with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that the author of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
 
-### ProtoREPL in Atom
+## Convenience REPL references
+
+[source](https://github.com/thheller/shadow-cljs/wiki/REPL)
+
+Waking up ProtoREPL to shadow once config'ed (you'll use this later):
+
+For `:devtools`
+```
+(shadow.cljs.devtools.api/nrepl-select :<your build>)
+```
+To `:watch`
+```
+(shadow.cljs.devtools.api/watch :<your build>)
+```
+# Prerequisites
+
+## ProtoREPL in Atom
 
 The author of ProtoREPL has put together a marvelous setup guide, which you can find [here](https://gist.github.com/jasongilman/d1f70507bed021b48625). While the author uses Leiningen, you can skip those steps if you'd like. However, I find that there's very little overhead and - perhaps more importantly - just following all the steps is probably the fastest/clearest path. As a bonus, you'll already be setup for Clojure AND Clojurescript development by just following the steps.
 
-### Java SDK:
+## Java SDK:
 Both Leiningen and Shadow require a modern version of Java SDK installed. The recommended version - as of the time of writing - is version 8, which you can find [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
-## Shadow-cljs Setup
+# Shadow-cljs Setup
 
-### Local Files
+## Local Files
 
 At the top of `shadow-cljs.edn` add line:
 ```clj
@@ -61,7 +75,7 @@ shadow-cljs - nREPL server started on port 3333
 
 upon running the first time, you will have a new folder in your project: `.shadow-cljs`
 
-### Atom Settings
+## Atom Settings
 
 Now that you have your base project setup, you can get the fun part: Using the REPL!!
 
@@ -73,7 +87,7 @@ In the dialog that pops up leave the setting for "host": `localhost` enter the `
 
 `3333` in this case
 
-#### Kicking the Tires
+### Kicking the Tires
 
 Now, just try out some Clojure(script) in the REPL that pops up. Something like:
 ```clj
@@ -82,7 +96,7 @@ Now, just try out some Clojure(script) in the REPL that pops up. Something like:
 
 Hit `shift+enter` and you should see `3` in the REPL. If you got that, congrats! We're now ready for development!
 
-## Project Deployment Targets
+# Project Deployment Targets
 
 There are a number of `:target`s [you can set](https://shadow-cljs.github.io/docs/UsersGuide.html#_build_target) Shadow for.
 
@@ -117,14 +131,14 @@ This means that you can - with Shadow - deploy an app, a node module or a simple
 
 We are going to cover two of these:
 
-1) Web Applications
-2) Node Modules
+1) Web Application
+2) Node Library
 
-### 1) Setting up the Project for Building a Web Application
+# 1) Setting up the Project for Building a Web Application
 
 Let's setup a project for building a web app! If you'd like to see more configuration notes, please check out [this entry](https://github.com/thheller/shadow-cljs/wiki/Production-Builds) in the shadow github.
 
-#### Augmenting `shadow-cljs.edn`
+## Augmenting `shadow-cljs.edn`
 
 If you'll recall in our `package.json` file:
 ```js
@@ -176,14 +190,18 @@ Let's break this down one line at a time:
    {:main
 ; The entry file's namespace. See Note 1) below
     {:entries [app.core]}}
-; The :devtools section see Reference 2) in the References Section at the bottom
+; The :devtools section see Reference 2) in the References at the Bottom of this Section
    :devtools
+; A symbol (with namespace) of a function to run just before refreshing files that have been recompiled.
    {:before-load app.core/stop
+; A symbol (with namespace) of a function to run after hot code reload is complete.
     :after-load app.core/start
+; The disk path from which to serve root filesystem requests. If not supplied, no disk files are served.
     :http-root "public"
+; The port to serve from. See more in References
     :http-port 8020}}}}
 ```
-#### Notes:
+### Notes:
 1) `:build` setup is structured like this:
 ```clj
  :builds
@@ -205,7 +223,7 @@ whose file structure should look like this:
 2) You can find out more about these settings in [the documentation](https://shadow-cljs.github.io/docs/UsersGuide.html#target-browser)
 
 
-#### Create an `index.html` file inside your `public` directory
+## Create an `index.html` file inside your `public` directory
 
 Create an html file that looks something like this:
 
@@ -224,7 +242,7 @@ Create an html file that looks something like this:
 </html>
 ```
 
-#### Create a Starter File
+## Create a Starter File
 
 In your `core.cljs` file (if you're following along), create a simple starter file like this:
 
@@ -245,7 +263,7 @@ In your `core.cljs` file (if you're following along), create a simple starter fi
   (start))
 ```
 
-#### Fire It Up!
+## Fire It Up!
 
 Once you've changed your `shadow-cljs.edn` file, you'll have to restart the shadow dev environment to pick up the new configuration. Don't worry, that's the only time you'll really have to restart it. However instead of running: `shadow-cljs server` in your terminal, you'll run:
 ```
@@ -284,9 +302,151 @@ If you see that, you're ALL SET FOR CLOJURESCRIPT WEB APP DEVELOPMENT! WOOT!
 
 Now play around with some of the [marvelous REPL goodness](https://gist.github.com/jasongilman/d1f70507bed021b48625#file-keymap-cson) available in Atom!
 
-
 ## References:
-1) Proto REPL(Atom) [link](https://shadow-cljs.github.io/docs/UsersGuide.html#_proto_repl_atom)
-2) :devtools in shadow
-  a. [`:devtools` section](https://shadow-cljs.github.io/docs/UsersGuide.html#devtools)
-  b. [additional `:devtools` config for `:target :browser`](https://shadow-cljs.github.io/docs/UsersGuide.html#_development_support)
+1. Proto REPL(Atom) [link](https://shadow-cljs.github.io/docs/UsersGuide.html#_proto_repl_atom)
+2. `:devtools` in shadow
+   1. [`:devtools` section](https://shadow-cljs.github.io/docs/UsersGuide.html#devtools)
+   2. [additional `:devtools` config for `:target :browser`](https://shadow-cljs.github.io/docs/UsersGuide.html#_development_support)
+3. [configuring lifecycle hooks like `:before-load`](https://shadow-cljs.github.io/docs/UsersGuide.html#_config)
+4. [configuring HTTP](https://shadow-cljs.github.io/docs/UsersGuide.html#browser-http-server)
+
+# 2) Setting up the Project for Building a Node-Library
+
+## The First Node File
+
+Let's create a new folder and file to seed our new Node library.
+
+Under the `src` folder, create a new folder: `lib`
+
+Then, within that folder we'll create another `core.cljs` and add this to the file:
+
+```clj
+(ns census.lib)
+
+(defn hello [& cli-args]
+  (prn "hello world"))
+```
+
+## `shadow-cljs.edn` Config
+
+The target-specific options for a `:node-library` are:
+
+`:target`
+Use :node-library
+
+`:output-to`
+(required). The path and filename for the generated library.
+
+`:exports`
+(required) Either a single namespace-qualified symbol or a map from keywords to namespace-qualified symbols.
+
+`:output-dir`
+(optional). The path for supporting files in development mode. Defaults to a cache directory.
+
+## `package.json` Config
+
+We'll change our `package.json` `"scripts"` like so:
+
+```
+"scripts": {
+  "dev": "shadow-cljs watch lib",
+  "release": "shadow-cljs release lib"
+}
+```
+
+## `shadow-cljs.edn` Config
+
+Now we'll setup shadow to build our Clojurescript into a Node library, which we can then use either from other JavaScript code!
+
+```clj
+{:source-paths ["src"]
+ :dependencies [[proto-repl "0.3.1"]]
+ :nrepl {:port 3333}
+ :builds
+; APP SETUP
+ ; {:app  {:target     :browser
+ ;         :output-dir "public/js"
+ ;         :asset-path "js"
+ ;         :modules {:main {:entries [app.core]}
+ ;                   :devtools {:before-load app.core/stop
+ ;                              :after-load app.core/start
+ ;                              :http-root "public"
+ ;                              :http-port 8020}}}}
+; LIB SETUP
+ {:lib {:target     :node-library
+        :output-dir "public/lib"
+        :output-to "public/lib/library.js"
+        :exports {:hello lib.core/hello}}}}
+```
+
+## Create a Super Basic cljs file
+
+```clj
+(ns lib.core)
+
+(defn hello [& cli-args]
+  (prn "hello world"))
+
+(prn "Hey from proto-repl!")
+```
+
+## Fire it up!
+
+Now we should be able to restart our shadow in our terminal:
+
+```
+npm run dev
+```
+
+Execute the block of code using ProtoREPL:
+
+```clj
+(prn "Hey from proto-repl!")
+```
+
+And you should see: `"Hey from proto-repl!"` in ProtoREPL.
+
+Now, in your terminal, you should be able to open the file (`library.js` in this case) in the `:output-to` directory (`public/lib` in this case) by using `Node library` and see `"Hey from proto-repl!"` there as well.
+
+## Testing the cljs-runtime
+
+Now, in your terminal, jump up a folder into your `cljs-runtime` folder. The path in this case is:
+```
+...public\lib\cljs-runtime
+```
+and just use the `node` command to start the runtime.
+
+You should immediately see `"Hey from proto-repl!"`, but - also - we can use our compiled JavaScript from node!
+
+```js
+$ cd lib/cljs-runtime
+$ node
+> var x = require('./lib');
+undefined
+> x.hello()
+hello
+'hello world'
+```
+
+If you got this far, you're ready to rock on your new Node Library! WOOT!
+
+### Notes:
+
+1) `:build` setup is structured like this:
+```clj
+ :builds
+ {:lib {:target     :node-library
+        :output-dir "public/lib"
+        :output-to "public/lib/library.js"
+        :exports {:hello lib.core/hello}}}}
+```
+
+whose file structure should look like this:
+```
+.
+├── package.json
+├── shadow-cljs.edn
+└── src
+    └── lib
+        └── core.cljs
+```

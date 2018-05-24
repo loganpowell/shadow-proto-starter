@@ -1,7 +1,90 @@
-var shadow$provide = {};
-var CLOSURE_NO_DEPS = true;
-var CLOSURE_BASE_PATH = 'js/cljs-runtime/';
-var CLOSURE_DEFINES = {"shadow.cljs.devtools.client.env.repl_pprint":false,"shadow.cljs.devtools.client.env.devtools_url":"","shadow.cljs.devtools.client.env.autoload":true,"shadow.cljs.devtools.client.env.proc_id":"3916e175-8e98-44c6-9378-c30931d96708","goog.ENABLE_DEBUG_LOADER":false,"shadow.cljs.devtools.client.env.use_document_host":true,"shadow.cljs.devtools.client.env.module_format":"goog","goog.LOCALE":"en","shadow.cljs.devtools.client.env.repl_host":"10.0.75.1","shadow.cljs.devtools.client.env.build_id":"app","shadow.cljs.devtools.client.env.ignore_warnings":false,"goog.DEBUG":true,"shadow.cljs.devtools.client.env.reload_with_state":false,"shadow.cljs.devtools.client.env.ssl":false,"shadow.cljs.devtools.client.env.repl_port":9630,"shadow.cljs.devtools.client.env.enabled":true,"goog.TRANSPILE":"never"};
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        module.exports = factory();
+    } else {
+        root.returnExports = factory();
+  }
+})(this, function () {
+    
+var SHADOW_IMPORT_PATH = "C:/Users/surface/Projects/clojure/cljs/shadow-proto-starter/public/lib/cljs-runtime";
+global.$CLJS = global;
+try {require('source-map-support').install();} catch (e) {console.warn('no "source-map-support" (run "npm install source-map-support --save-dev" to get it)');}
+
+global.CLOSURE_NO_DEPS = true;
+
+global.CLOSURE_DEFINES = {"shadow.cljs.devtools.client.env.repl_pprint":false,"shadow.cljs.devtools.client.env.devtools_url":"","shadow.cljs.devtools.client.env.autoload":false,"shadow.cljs.devtools.client.env.proc_id":"ba7aaa09-b5b4-498e-ac8f-b1995ca9a127","goog.ENABLE_DEBUG_LOADER":false,"shadow.cljs.devtools.client.env.use_document_host":true,"shadow.cljs.devtools.client.env.module_format":"goog","goog.LOCALE":"en","shadow.cljs.devtools.client.env.repl_host":"10.0.75.1","shadow.cljs.devtools.client.env.build_id":"lib","shadow.cljs.devtools.client.env.ignore_warnings":false,"goog.DEBUG":true,"cljs.core._STAR_target_STAR_":"nodejs","shadow.cljs.devtools.client.env.reload_with_state":false,"shadow.cljs.devtools.client.env.ssl":false,"shadow.cljs.devtools.client.env.repl_port":9630,"shadow.cljs.devtools.client.env.enabled":true,"goog.TRANSPILE":"never"};
+
+var goog = global.goog = {};
+
+var SHADOW_IMPORTED = global.SHADOW_IMPORTED = {};
+var PATH = require("path");
+var VM = require("vm");
+var FS = require("fs");
+
+var SHADOW_PROVIDE = function(name) {
+  return goog.exportPath_(name, undefined);
+};
+
+var SHADOW_REQUIRE = function(name) {
+  return true;
+};
+
+var SHADOW_WRAP = function(js) {
+  var code = "(function (require, module, __filename, __dirname) {\n";
+  // this is part of goog/base.js and for some reason the only global var not on goog or goog.global
+  code += "var COMPILED = false;\n"
+  code += js;
+  code += "\n});";
+  return code;
+};
+
+var SHADOW_IMPORT = global.SHADOW_IMPORT = function(src) {
+  if (CLOSURE_DEFINES["shadow.debug"]) {
+    console.info("SHADOW load:", src);
+  }
+
+  SHADOW_IMPORTED[src] = true;
+
+  // SHADOW_IMPORT_PATH is an absolute path
+  var filePath = PATH.resolve(SHADOW_IMPORT_PATH, src);
+
+  var js = FS.readFileSync(filePath);
+
+  var code = SHADOW_WRAP(js);
+
+  var fn = VM.runInThisContext(code,
+    {filename: filePath,
+     lineOffset: -2, // see SHADOW_WRAP, adds 2 lines
+     displayErrors: true
+     });
+
+  // the comment is for source-map-support which unfortunately shows the wrong piece of code but the stack is correct
+  try {
+  /* ignore this, look at stacktrace */ fn.call(global, require, module, __filename, __dirname);
+  } catch (e) {
+    console.error("SHADOW import error", filePath);
+    throw e;
+  }
+
+  return true;
+};
+
+global.SHADOW_NODE_EVAL = function(js, smJson) {
+  if (smJson) {
+    js += "\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,";
+    js += new Buffer(smJson).toString('base64');
+  }
+
+  // console.log(js);
+
+  return VM.runInThisContext.call(global, js,
+    {filename: "<eval>",
+     lineOffset: 0,
+     displayErrors: true});
+};
+
 // Copyright 2006 The Closure Library Authors. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,7 +132,7 @@ var goog = goog || {};
 /**
  * Reference to the global context.  In most cases this will be 'window'.
  */
-goog.global = this;
+goog.global = global;
 
 
 /**
@@ -2924,142 +3007,47 @@ goog.createRequiresTranspilation_ = function() {
   return requiresTranspilation;
 };
 
-var SHADOW_ENV = function() {
-  var loadedFiles = {};
-
-  var env = {};
-
-  var doc = goog.global.document;
-
-  if (!doc) {
-    throw new Error("browser bootstrap used in incorrect target");
-  }
-
-  var wentAsync = false;
-
-  var canDocumentWrite = function() {
-    return !wentAsync && doc.readyState == "loading";
-  };
-
-  // apparently calling eval causes the code to never be optimized
-  // creating a script node, appending it and removing it seems to
-  // have the same effect without the speed penalty?
-  function scriptEval(code) {
-    var node = doc.createElement("script");
-    node.type = "text/javascript";
-    node.appendChild(doc.createTextNode(code));
-    doc.body.appendChild(node);
-    doc.body.removeChild(node);
-  }
-
-  var asyncLoad = (function() {
-    var loadOrder = [];
-    var loadState = {};
-
-    function loadPending() {
-      for (var i = 0, len = loadOrder.length; i < len; i++) {
-        var uri = loadOrder[i];
-        var state = loadState[uri];
-
-        if (typeof state === "string") {
-          loadState[uri] = true;
-          if (state != "") {
-            var code = state + "\n//# sourceURL=" + uri + "\n";
-            scriptEval(code);
-          }
-        } else if (state === true) {
-          continue;
-        } else {
-          break;
-        }
-      }
-    }
-
-    // ie11 doesn't have fetch, use xhr instead
-    // FIXME: not sure if fetch provides any benefit over xhr
-    if (typeof window.fetch === "undefined") {
-      return function asyncXhr(uri) {
-        loadOrder.push(uri);
-        loadState[uri] = false;
-        var req = new XMLHttpRequest();
-        req.onload = function(e) {
-          loadState[uri] = req.responseText;
-          loadPending();
-        };
-        req.open("GET", uri);
-        req.send();
-      }
-    } else {
-      function responseText(response) {
-        // FIXME: check status
-        return response.text();
-      }
-
-      function evalFetch(uri) {
-        return function(code) {
-          loadState[uri] = code;
-          loadPending();
-        };
-      }
-
-      return function asyncFetch(uri) {
-        if (loadState[uri] == undefined) {
-          loadState[uri] = false;
-          loadOrder.push(uri);
-          fetch(uri)
-            .then(responseText)
-            .then(evalFetch(uri));
-        }
-      };
-    }
-  })();
-
-  env.load = function(paths) {
-    var docWrite = canDocumentWrite();
-
-    paths.forEach(function(path) {
-      if (!loadedFiles[path]) {
-        loadedFiles[path] = true;
-
-        var uri = CLOSURE_BASE_PATH + path;
-
-        if (docWrite) {
-          document.write(
-            "<script src='" + uri + "' type='text/javascript'></script>"
-          );
-        } else {
-          // once async always async
-          wentAsync = true;
-          asyncLoad(uri);
-        }
-      }
-    });
-  };
-
-  env.isLoaded = function(path) {
-    return loadedFiles[path] || false; // false is better than undefined
-  };
-
-  env.setLoaded = function(path) {
-    loadedFiles[path] = true;
-  };
-
-  return env;
-}.call(this);
+goog.provide = SHADOW_PROVIDE;
+goog.require = SHADOW_REQUIRE;
+SHADOW_IMPORT("goog.debug.error.js");
+SHADOW_IMPORT("goog.dom.nodetype.js");
+SHADOW_IMPORT("goog.string.string.js");
+SHADOW_IMPORT("goog.asserts.asserts.js");
+SHADOW_IMPORT("goog.reflect.reflect.js");
+SHADOW_IMPORT("goog.math.long.js");
+SHADOW_IMPORT("goog.math.integer.js");
+SHADOW_IMPORT("goog.object.object.js");
+SHADOW_IMPORT("goog.array.array.js");
+SHADOW_IMPORT("goog.structs.structs.js");
+SHADOW_IMPORT("goog.functions.functions.js");
+SHADOW_IMPORT("goog.math.math.js");
+SHADOW_IMPORT("goog.iter.iter.js");
+SHADOW_IMPORT("goog.structs.map.js");
+SHADOW_IMPORT("goog.uri.utils.js");
+SHADOW_IMPORT("goog.uri.uri.js");
+SHADOW_IMPORT("goog.string.stringbuffer.js");
+SHADOW_IMPORT("cljs.core.js");
+SHADOW_IMPORT("clojure.walk.js");
+SHADOW_IMPORT("cljs.spec.gen.alpha.js");
+SHADOW_IMPORT("clojure.string.js");
+SHADOW_IMPORT("cljs.spec.alpha.js");
+SHADOW_IMPORT("cljs.repl.js");
+SHADOW_IMPORT("cljs.user.js");
+SHADOW_IMPORT("cljs.tools.reader.impl.utils.js");
+SHADOW_IMPORT("cljs.tools.reader.reader_types.js");
+SHADOW_IMPORT("cljs.tools.reader.impl.inspect.js");
+SHADOW_IMPORT("cljs.tools.reader.impl.errors.js");
+SHADOW_IMPORT("cljs.tools.reader.impl.commons.js");
+SHADOW_IMPORT("cljs.tools.reader.js");
+SHADOW_IMPORT("cljs.pprint.js");
+SHADOW_IMPORT("shadow.cljs.devtools.client.env.js");
+SHADOW_IMPORT("shadow.js.shim.module$ws.js");
+SHADOW_IMPORT("cljs.tools.reader.edn.js");
+SHADOW_IMPORT("cljs.reader.js");
+SHADOW_IMPORT("shadow.cljs.devtools.client.node.js");
+SHADOW_IMPORT("lib.core.js");
+SHADOW_IMPORT("shadow.umd_helper.js");
 
 
-goog.global["$CLJS"] = goog.global;
-
-
-if(typeof Math.imul == "undefined" || (Math.imul(0xffffffff,5) == 0)) {
-    Math.imul = function (a, b) {
-        var ah  = (a >>> 16) & 0xffff;
-        var al = a & 0xffff;
-        var bh  = (b >>> 16) & 0xffff;
-        var bl = b & 0xffff;
-        // the shift by 0 fixes the sign on the high part
-        // the final |0 converts the unsigned value into a signed value
-        return ((al * bl) + (((ah * bl + al * bh) << 16) >>> 0)|0);
-    }
-}
-SHADOW_ENV.load(["goog.debug.error.js","goog.dom.nodetype.js","goog.string.string.js","goog.asserts.asserts.js","goog.reflect.reflect.js","goog.math.long.js","goog.math.integer.js","goog.object.object.js","goog.array.array.js","goog.structs.structs.js","goog.functions.functions.js","goog.math.math.js","goog.iter.iter.js","goog.structs.map.js","goog.uri.utils.js","goog.uri.uri.js","goog.string.stringbuffer.js","cljs.core.js","clojure.string.js","shadow.cljs.devtools.client.console.js","clojure.walk.js","cljs.spec.gen.alpha.js","cljs.spec.alpha.js","cljs.repl.js","cljs.user.js","cljs.tools.reader.impl.utils.js","cljs.tools.reader.reader_types.js","cljs.tools.reader.impl.inspect.js","cljs.tools.reader.impl.errors.js","cljs.tools.reader.impl.commons.js","cljs.tools.reader.js","cljs.tools.reader.edn.js","cljs.reader.js","goog.labs.useragent.util.js","goog.labs.useragent.browser.js","goog.labs.useragent.engine.js","goog.labs.useragent.platform.js","goog.useragent.useragent.js","goog.dom.browserfeature.js","goog.dom.htmlelement.js","goog.dom.tagname.js","goog.dom.asserts.js","goog.dom.tags.js","goog.string.typedstring.js","goog.string.const.js","goog.html.safescript.js","goog.fs.url.js","goog.i18n.bidi.js","goog.html.trustedresourceurl.js","goog.html.safeurl.js","goog.html.safestyle.js","goog.html.safestylesheet.js","goog.html.safehtml.js","goog.dom.safe.js","goog.html.uncheckedconversions.js","goog.math.coordinate.js","goog.math.size.js","goog.dom.dom.js","goog.promise.thenable.js","goog.async.freelist.js","goog.async.workqueue.js","goog.debug.entrypointregistry.js","goog.async.nexttick.js","goog.async.run.js","goog.promise.resolver.js","goog.promise.promise.js","goog.mochikit.async.deferred.js","goog.net.jsloader.js","goog.useragent.product.js","goog.disposable.idisposable.js","goog.disposable.disposable.js","goog.events.browserfeature.js","goog.events.eventid.js","goog.events.event.js","goog.events.eventtype.js","goog.events.browserevent.js","goog.events.listenable.js","goog.events.listener.js","goog.events.listenermap.js","goog.events.events.js","goog.events.eventtarget.js","goog.timer.timer.js","goog.json.json.js","goog.json.hybrid.js","goog.debug.errorcontext.js","goog.debug.debug.js","goog.debug.logrecord.js","goog.debug.logbuffer.js","goog.debug.logger.js","goog.log.log.js","goog.net.errorcode.js","goog.net.eventtype.js","goog.net.httpstatus.js","goog.net.xhrlike.js","goog.net.xmlhttpfactory.js","goog.net.wrapperxmlhttpfactory.js","goog.net.xmlhttp.js","goog.net.xhrio.js","cljs.pprint.js","shadow.cljs.devtools.client.env.js","goog.dom.inputtype.js","goog.window.window.js","goog.dom.forms.js","goog.dom.classlist.js","goog.dom.vendor.js","goog.html.legacyconversions.js","goog.math.box.js","goog.math.irect.js","goog.math.rect.js","goog.style.style.js","goog.style.transition.js","cljs.core.async.impl.protocols.js","cljs.core.async.impl.buffers.js","cljs.core.async.impl.dispatch.js","cljs.core.async.impl.channels.js","cljs.core.async.impl.timers.js","cljs.core.async.impl.ioc_helpers.js","cljs.core.async.js","shadow.dom.js","goog.result.result_interface.js","goog.result.dependentresult.js","goog.result.simpleresult.js","goog.result.resultutil.js","goog.labs.net.xhr.js","clojure.set.js","clojure.data.js","shadow.util.js","shadow.object.js","shadow.xhr.js","shadow.animate.js","goog.string.stringformat.js","shadow.cljs.devtools.client.hud.js","shadow.cljs.devtools.client.browser.js","app.core.js","shadow.module.main.append.js"]);
+    return shadow.umd_helper.get_exports();
+});
