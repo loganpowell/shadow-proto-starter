@@ -497,7 +497,8 @@ If you still have your `node` session running (via `...require('./library')` in 
 
 [source](https://shadow-cljs.github.io/docs/UsersGuide.html#_exports)
 
-Next Steps:
+# Next Steps:
+
 If you’ve never touched clojure(script) before, get started right away with some [koans](http://clojurescriptkoans.com/)!
 
 Or, play with your freshly minted learning environment by cloning some [practice examples](https://github.com/joakin/diving-into-clojurescript-exercises).
