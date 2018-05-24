@@ -367,7 +367,7 @@ We'll change our `package.json` `"scripts"` like so:
 
 ## `shadow-cljs.edn` Config
 
-Now we'll setup shadow to build our Clojurescript into a Node library, which we can then use either from other JavaScript code!
+Now we'll setup shadow to build our Clojurescript into a Node library, which we can then use from other JavaScript code!
 
 ```clj
 {:source-paths ["src"]
@@ -390,7 +390,7 @@ Now we'll setup shadow to build our Clojurescript into a Node library, which we 
         :exports {:hello lib.core/hello}}}}
 ```
 
-## Create a Super Basic cljs file
+## Add a Line to Your Super Basic cljs file
 
 ```clj
 (ns lib.core)
@@ -398,7 +398,7 @@ Now we'll setup shadow to build our Clojurescript into a Node library, which we 
 (defn hello [& cli-args]
   (prn "hello world"))
 
-(prn "Hey from proto-repl!")
+(prn "Hey from proto-repl!") ;; test proto-repl
 ```
 
 ## Fire it up!
@@ -417,7 +417,7 @@ Execute the block of code using ProtoREPL (`ctrl+, b`/`ctrl+alt, b`):
 
 And you should see: `"Hey from proto-repl!"` in ProtoREPL.
 
-Now, in your terminal, you should be able to open the file (`library.js` in this case) in the `:output-to` directory (`public/lib` in this case) by using `Node library` and see `"Hey from proto-repl!"` there as well.
+Now, in your terminal, you should be able to open the file (`library.js` in this case) in the `:output-to` directory (`public/lib` in this case).
 
 ## Testing in Node
 
@@ -431,10 +431,10 @@ Change your "super basic" `lib/core.cljs` file for testing in Node:
 (defn hello [& cli-args]
   (prn "hello world"))
 
-(prn "Hey from node!")
+(prn "Hey from node!") ; test out Node
 ```
 
-### File Structure:
+### File Structure Review:
 
 1) `:build` setup is structured like this:
 ```clj
@@ -445,7 +445,7 @@ Change your "super basic" `lib/core.cljs` file for testing in Node:
         :exports {:hello lib.core/hello}}}}
 ```
 
-whose file structure should look like this:
+Your file structure should look like this:
 ```
 .
 ├── package.json
@@ -461,6 +461,7 @@ The :exports map maps CLJS vars to the name they should be exported to.
 
 Now, in a new tab/window in your terminal, jump into your `public\lib` folder and just use the `node` command to start the runtime.
 
+`.../public/`
 ```js
 $ cd lib
 $ node
@@ -471,6 +472,7 @@ undefined
 ```
 You should see `"Hey from node!"`, which we `prn`ted from within the namespace, but - also - we can use our compiled JavaScript from node!
 
+`.../public/lib/`
 ```js
 > var x = require('./library.js');
 "Hey from node!"
