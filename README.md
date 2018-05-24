@@ -1,3 +1,12 @@
+---
+title: 'Clojurescript Development Environment for JavaScript Developers with Shadow-cljs and ProtoREPL in Atom'
+created: '5-24-2018'
+canonicalUrl: 'https://github.com/loganpowell/shadow-proto-starter'
+tags: ['cljs', 'Atom', 'Clojurescript', 'shadow-cljs', 'protorepl']
+license: 'public-domain'
+---
+
+
 # Introduction
 
 `shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates fully with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that [the author](https://github.com/thheller) (and [contributors](https://github.com/thheller/shadow-cljs/graphs/contributors) - one of which [inspired me](https://medium.com/@jiyinyiyong/clojurians-please-share-your-knowledges-with-blogs-c674503f54a) to write this up) of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
