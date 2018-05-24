@@ -1,10 +1,10 @@
----
+<!-- ---
 title: 'Clojurescript Development Environment for JavaScript Developers with Shadow-cljs and ProtoREPL in Atom'
 created: '5-24-2018'
 canonicalUrl: 'https://github.com/loganpowell/shadow-proto-starter'
 tags: ['cljs', 'Atom', 'Clojurescript', 'shadow-cljs', 'protorepl']
 license: 'public-domain'
----
+--- -->
 
 
 # Introduction
