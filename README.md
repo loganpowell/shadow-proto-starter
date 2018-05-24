@@ -35,7 +35,7 @@ Both Leiningen and Shadow require a modern version of Java SDK installed. The re
 
 ## Local Files
 
-At the top of `shadow-cljs.edn` add line:
+In the root directory of your project, create a `shadow-cljs.edn` file. At the top of `shadow-cljs.edn` add line:
 ```clj
 {:source-paths ["src"]}
 ```
@@ -49,7 +49,7 @@ As mentioned in [the shadow docs](https://shadow-cljs.github.io/docs/UsersGuide.
 
 No, we don't want that.
 
-In the root directory of your project, create a `shadow-cljs.edn` file add `[proto-repl "0.3.1"]` to the `:dependencies` and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). It should look like this:
+Edit the `shadow-cljs.edn` file by adding `[proto-repl "0.3.1"]` to a `:dependencies` key and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). It should look like this:
 ```clj
 {:source-paths ["src"]
  :dependencies [[proto-repl "0.3.1"]]
