@@ -1,6 +1,6 @@
 # Introduction
 
-`shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates fully with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that the author of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
+`shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates fully with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that [the author](https://github.com/thheller) (and [contributors](https://github.com/thheller/shadow-cljs/graphs/contributors)) of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
 
 ## Convenience REPL references
 
@@ -36,6 +36,9 @@ Create a `src` folder in the root directory of your project. The `src` folder is
  (ns user)
  (defn reset [])
  ```
+As mentioned in [the shadow docs](https://shadow-cljs.github.io/docs/UsersGuide.html#_proto_repl_atom): "The file must define the user/reset fn since Proto REPL will call that when connecting. If user/reset is not found it will call tools.namespace which destroys the running shadow-cljs server. We don’t want that."
+
+No, we don't want that.
 
 In the `shadow-cljs.edn` file add `[proto-repl "0.3.1"]` to the `:dependencies` and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). It should look like this:
 ```clj
@@ -76,7 +79,7 @@ upon running the first time, you will have a new folder in your project: `.shado
 
 Now that you have your base project setup, you can get the fun part: Using the REPL!!
 
-In Atom use your Atom Command Prompt (mine is `ctrl+shift+p`) and find:
+In Atom use your Atom Command Pallet (mine is `ctrl+shift+p`) and find:
 
 `Proto Repl: Remote Nrepl Connection`
 
@@ -430,7 +433,6 @@ Change your "super basic" `lib/core.cljs` file for testing in Node:
  {:lib {:target     :node-library
         :output-dir "public/lib"
         :output-to "public/lib/library.js"
-        :compiler-options {:pretty-print true}
         :exports {:hello lib.core/hello}}}}
 ```
 
@@ -451,7 +453,7 @@ The :exports map maps CLJS vars to the name they should be exported to.
 Now, in a new tab/window in your terminal, jump into your `public\lib` folder and just use the `node` command to start the runtime.
 
 ```js
-$ cd lib/cljs-runtime
+$ cd lib
 $ node
 
 > var x = require('./library.js');
