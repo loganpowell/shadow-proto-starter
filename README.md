@@ -50,6 +50,8 @@ In the root directory of your project, create a `shadow-cljs.edn` file. At the t
 {:source-paths ["src"]}
 ```
 
+You can also see a starter `shadow-cljs.edn` file from your terminal with `shadow-cljs init`.
+
 Create a `src` folder in the root directory of your project. The `src` folder is where you'll create a `user.clj` file, wherein you include the short program:
 ```clj
  (ns user)
@@ -59,7 +61,7 @@ As mentioned in [the shadow docs](https://shadow-cljs.github.io/docs/UsersGuide.
 
 No, we don't want that.
 
-Edit the `shadow-cljs.edn` file by adding `[proto-repl "0.3.1"]` to a `:dependencies` key and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). It should look like this:
+Edit the `shadow-cljs.edn` file by adding `[proto-repl "0.3.1"]` to a `:dependencies` key and set the `:nrepl` port (using 3333 here, but you can use whatever you prefer). Find out more about dependencies [in the docs](https://shadow-cljs.github.io/docs/UsersGuide.html#_configuration). It should look like this:
 ```clj
 {:source-paths ["src"]
  :dependencies [[proto-repl "0.3.1"]]
