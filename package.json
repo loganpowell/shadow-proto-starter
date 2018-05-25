@@ -4,8 +4,8 @@
   "description": "shadow-cljs starter setup for proto-repl and atom",
   "main": "index.js",
   "scripts": {
-    "dev": "shadow-cljs watch app",
-    "release": "shadow-cljs release app"
+    "dev": "shadow-cljs watch lib",
+    "release": "shadow-cljs release lib"
   },
   "author": "Logan Powell",
   "license": "MIT",
