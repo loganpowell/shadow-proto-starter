@@ -22,15 +22,21 @@ This is going to be a whirlwind tour of shadow-cljs for JavaScript developers wh
 Waking up ProtoREPL to shadow once config'ed (you'll use this later):
 
 For `:devtools`
-```
+```clj
 (shadow.cljs.devtools.api/nrepl-select :<your build>)
 ```
+For `:target` `:node-library`
 
+```clj
+(shadow.cljs.devtools.api/node-repl)
+```
 # Prerequisites
 
 ## ProtoREPL in Atom
 
 The author of ProtoREPL has put together a marvelous setup guide, which you can find [here](https://gist.github.com/jasongilman/d1f70507bed021b48625). While the author uses Leiningen, you can skip those steps if you'd like. However, I find that there's very little overhead and - perhaps more importantly - just following all the steps is probably the fastest/clearest path. As a bonus, you'll already be setup for Clojure AND Clojurescript development by just following the steps there and here.
+
+By default, ProtoREPL evaluates your code using Clojure (not Clojurescript), so - if you're not careful and use one of the shadow devtools (See: "Convenience REPL References" above), you may mistakenly be evaluating your code on the JVM instead of in JavaScript. Key takeaway: As soon as you wake up your `Remote nRepl Connection` in ProtoREPL, eval one of shadow's devtools commands in the REPL.
 
 ## Java SDK:
 Both Leiningen and Shadow require a modern version of Java SDK installed. The recommended version - as of the time of writing - is version 8, which you can find [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html). Don’t worry, you won’t have to touch Java for Clojurescript. It just needs the compiler.
@@ -504,6 +510,26 @@ As with other builds, you can leverage the awesome REPL-driven-development style
 2) When ProtoREPL pops up, eval: `(shadow.cljs.devtools.api/nrepl-select :lib)` and you're up and running your interactive Node environment!
 
 If you still have your `node` session running (via `...require('./library')` in this case) in your terminal, when you eval a block of code in your project (`ctrl+b`), you should see the result both in ProtoREPL as well as in your terminal.
+
+For Node development - unlike when targeting the browser - you'll use:
+
+```clj
+(shadow.cljs.devtools.api/node-repl)
+```
+to wake up ProtoREPL to your build. I made the mistake of not eval'ing this and got stuck for a while trying to figure out what I did wrong. Don't be like me. Eval!
+
+
+#### Caveats
+
+You may forget to eval the shadow devtools commands after connecting to your `Remote nRepl Connection`, in which case you'll get this warning:
+
+```
+No application has connected to the REPL server. Make sure your JS environment has loaded your compiled ClojureScript code.
+```
+You may have - unknowingly - done all kinds of stuff using the Clojure REPL instead of a cljs REPL. If you run into strange issues, just run these two ProtoREPL commands from the Atom Command Pallet:
+
+1) Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
+2) Clear all values: `Proto Repl: Clear Saved Values`
 
 ## JavaScript Exports Elaborated
 
