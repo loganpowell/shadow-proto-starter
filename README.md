@@ -11,6 +11,10 @@ license: 'public-domain'
 
 `shadow-cljs` is a clojurescript development environment that - unlike its predecessors - integrates seamlessly with the npm ecosystem to manage JavaScript dependencies. There are also many other conveniences that [the author](https://github.com/thheller) (and [contributors](https://github.com/thheller/shadow-cljs/graphs/contributors) - one of which [inspired me](https://medium.com/@jiyinyiyong/clojurians-please-share-your-knowledges-with-blogs-c674503f54a) to write this up) of shadow has provided the JavaScript-come-Clojurescript developer. Herein, we're going to run through how to get setup with shadow. This guide will focus on Atom, but there are [many other IDE/text editors](https://shadow-cljs.github.io/docs/UsersGuide.html#_editor_integration) you can use for this. I use Atom, so - ultimately - I'm doing this for myself. If anyone else gets anything from it, that's great. Like they say, if you want to understand something, teach it!
 
+### Caveat:
+
+This has is going to be a whirlwind tour of shadow-cljs for JavaScript developers who use Atom. It was created in a bit of a hurry, so if you find anything confusing please highlight were you're getting lost and I'll follow up. If you'll provide suggestions for improvement and they'll be incorporated.
+
 ## Convenience REPL references
 
 [source](https://github.com/thheller/shadow-cljs/wiki/REPL)
@@ -317,7 +321,7 @@ cljs.user=>
 
 If you see that, you're ALL SET FOR CLOJURESCRIPT WEB APP DEVELOPMENT! WOOT!
 
-Now play around with some of the [marvelous REPL goodness](https://gist.github.com/jasongilman/d1f70507bed021b48625#file-keymap-cson) available in Atom!
+Now play around with some of the [marvelous REPL goodness](https://atom.io/packages/proto-repl) available in Atom!
 
 ## References:
 1. Proto REPL(Atom) [link](https://shadow-cljs.github.io/docs/UsersGuide.html#_proto_repl_atom)
