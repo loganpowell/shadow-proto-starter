@@ -13,7 +13,7 @@ license: 'public-domain'
 
 ### Caveat:
 
-This has is going to be a whirlwind tour of shadow-cljs for JavaScript developers who use Atom. It was created in a bit of a hurry, so if you find anything confusing please highlight were you're getting lost and I'll follow up. If you'll provide suggestions for improvement and they'll be incorporated.
+This has is going to be a whirlwind tour of shadow-cljs for JavaScript developers who use Atom. It was created in a bit of a hurry, so if you find anything confusing please highlight were you're getting lost and I'll follow up. If you'll provide suggestions for improvement - they'll be incorporated.
 
 ## Convenience REPL references
 
