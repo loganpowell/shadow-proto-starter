@@ -526,7 +526,7 @@ You may forget to eval the shadow devtools commands after connecting to your `Re
 ```
 No application has connected to the REPL server. Make sure your JS environment has loaded your compiled ClojureScript code.
 ```
-You may have - unknowingly - done all kinds of stuff using the Clojure REPL instead of a cljs REPL. If you run into strange issues, just run these two ProtoREPL commands from the Atom Command Pallet:
+You may have - unknowingly - done all kinds of stuff using the Clojure REPL instead of a cljs REPL. If you run into strange issues, just run these commands starting from the Atom Command Pallet:
 
 1) Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
 2) Clear all values: `Proto Repl: Clear Saved Values`
