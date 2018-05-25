@@ -530,6 +530,9 @@ You may have - unknowingly - done all kinds of stuff using the Clojure REPL inst
 
 1) Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
 2) Clear all values: `Proto Repl: Clear Saved Values`
+3) Restart ProtoREPL
+4) Connect to `Proto Repl: Remote nRepl Connection`
+5) Eval in ProtoREPL ```clj (shadow.cljs.devtools.api/node-repl)``` and you should be good to go.
 
 ## JavaScript Exports Elaborated
 
