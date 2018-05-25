@@ -31,6 +31,12 @@ The author of ProtoREPL has put together a marvelous setup guide, which you can 
 ## Java SDK:
 Both Leiningen and Shadow require a modern version of Java SDK installed. The recommended version - as of the time of writing - is version 8, which you can find [here](http://www.oracle.com/technetwork/java/javase/downloads/index.html). Don’t worry, you won’t have to touch Java for Clojurescript. It just needs the compiler.
 
+## Install the Shadow CLI
+
+```
+npm install -g shadow-cljs
+```
+
 # Shadow-cljs Setup
 
 ## Local Files
