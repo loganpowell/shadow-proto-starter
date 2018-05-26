@@ -532,7 +532,7 @@ No application has connected to the REPL server. Make sure your JS environment h
 CompilerException java.lang.RuntimeException: Unable to resolve symbol: go in this context, compiling:
 ```
 
-In either case, If you run into strange issues, you may find it quicker to just run through the following commands from the Atom Command Pallet:
+In either case, If you run into strange issues, you may find it quicker to just use one  the following commands:
 
 1) Atom Command Pallet: Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
 2) Atom Command Pallet: Clear all values: `Proto Repl: Clear Saved Values`
