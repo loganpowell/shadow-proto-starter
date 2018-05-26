@@ -526,11 +526,18 @@ You may forget to eval the shadow devtools commands after connecting to your `Re
 ```
 No application has connected to the REPL server. Make sure your JS environment has loaded your compiled ClojureScript code.
 ```
+
+Unfortunately, ProtoREPL will sometimes kick you out of `(shadow.cljs.devtools.api/node-repl)` and put you back into it's default Clojure REPL. In which case you'll see the following error when trying to eval cljs code:
+
+```
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: go in this context, compiling:
+```
+
 You may have - unknowingly - done all kinds of stuff using the Clojure REPL instead of a cljs REPL. If you run into strange issues, just run these commands starting from the Atom Command Pallet:
 
 1) Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
 2) Clear all values: `Proto Repl: Clear Saved Values`
-3) Restart ProtoREPL
+3) Restart ProtoREPL (close the panel)
 4) Connect to `Proto Repl: Remote nRepl Connection`
 5) Eval in ProtoREPL ```clj (shadow.cljs.devtools.api/node-repl)``` and you should be good to go.
 
