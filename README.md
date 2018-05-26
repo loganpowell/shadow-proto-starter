@@ -521,29 +521,34 @@ to wake up ProtoREPL to your build. I made the mistake of not eval'ing this and 
 
 #### Caveats
 
-You may forget to eval the shadow devtools commands after connecting to your `Remote nRepl Connection`, in which case you'll get this warning:
+1) You may forget to eval the shadow devtools commands after connecting to your `Remote nRepl Connection`, in which case you'll get this warning:
 
 ```
 No application has connected to the REPL server. Make sure your JS environment has loaded your compiled ClojureScript code.
 ```
 
-Unfortunately, ProtoREPL will sometimes kick you out of `(shadow.cljs.devtools.api/node-repl)` and put you back into it's default Clojure REPL. In which case you'll see the following error when trying to eval cljs code:
+2) ProtoREPL will sometimes kick you out of `(shadow.cljs.devtools.api/node-repl)` and put you back into it's default Clojure REPL. In which case you'll see the following error when trying to eval cljs code:
 
 ```
 CompilerException java.lang.RuntimeException: Unable to resolve symbol: go in this context, compiling:
 ```
 
-You may have - unknowingly - done all kinds of stuff using the Clojure REPL instead of a cljs REPL. If you run into strange issues, just run these commands starting from the Atom Command Pallet:
+In either case, If you run into strange issues, you may find it quicker to just run through the following commands from the Atom Command Pallet:
 
-1) Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
-2) Clear all values: `Proto Repl: Clear Saved Values`
+1) Atom Command Pallet: Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
+2) Atom Command Pallet: Clear all values: `Proto Repl: Clear Saved Values`
 3) Restart ProtoREPL (close the panel)
-4) Connect to `Proto Repl: Remote nRepl Connection`
-5) Eval in ProtoREPL ```clj (shadow.cljs.devtools.api/node-repl)``` and you should be good to go.
+4) Atom Command Pallet: Connect to `Proto Repl: Remote nRepl Connection`
+5) In the ProtoREPL
+```clj
+(shadow.cljs.devtools.api/node-repl)
+```
 
-## JavaScript Exports Elaborated
+This should get you back in the saddle.
 
-[source](https://shadow-cljs.github.io/docs/UsersGuide.html#_exports)
+## References
+
+- Shadow-cljs JavaScript [Exports Elaborated](https://shadow-cljs.github.io/docs/UsersGuide.html#_exports)
 
 # Next Steps:
 
