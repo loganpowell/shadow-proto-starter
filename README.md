@@ -534,9 +534,8 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: go in th
 
 In either case, If you run into strange issues, you may find it quicker to just use one  the following commands:
 
-1) Atom Command Pallet: Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
+1) Restart ProtoREPL (close the panel)
 2) Atom Command Pallet: Clear all values: `Proto Repl: Clear Saved Values`
-3) Restart ProtoREPL (close the panel)
 4) Atom Command Pallet: Connect to `Proto Repl: Remote nRepl Connection`
 5) In the ProtoREPL
 ```clj
@@ -544,6 +543,10 @@ In either case, If you run into strange issues, you may find it quicker to just 
 ```
 
 This should get you back in the saddle.
+
+If you get a warning about an existing `alias`:
+
+Atom Command Pallet: Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
 
 ## References
 
