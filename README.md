@@ -184,18 +184,14 @@ We are going to add some config to our `shadow-cljs.edn` file:
  :nrepl {:port 3333}
  ;; NEW STUFF BELOW ;;
  :builds
- {:app
-  {:target     :browser
-   :output-dir "public/js"
-   :asset-path "js"
-   :modules
-   {:main
-    {:entries [starter.core]}}
-   :devtools
-   {:before-load starter.core/stop
-    :after-load starter.core/start
-    :http-root "public"
-    :http-port 8020}}}}
+ {:app  {:target     :browser
+         :output-dir "public/js"
+         :asset-path "js"
+         :modules {:main {:entries [app.core]}
+                   :devtools {:before-load app.core/stop
+                              :after-load app.core/start
+                              :http-root "public"
+                              :http-port 8020}}}
 ```
 
 Let's break this down one line at a time:
