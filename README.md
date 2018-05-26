@@ -427,6 +427,13 @@ Now we should be able to restart our shadow in our terminal:
 npm run dev
 ```
 
+For Node development - unlike when targeting the browser - you'll use:
+
+```clj
+(shadow.cljs.devtools.api/node-repl)
+```
+to wake up ProtoREPL to your build. I made the mistake of not eval'ing this and got stuck for a while trying to figure out what I did wrong. Don't be like me. Eval!
+
 Execute the block of code using ProtoREPL (`ctrl+, b`/`ctrl+alt, b`):
 
 ```clj
@@ -510,14 +517,6 @@ As with other builds, you can leverage the awesome REPL-driven-development style
 2) When ProtoREPL pops up, eval: `(shadow.cljs.devtools.api/nrepl-select :lib)` and you're up and running your interactive Node environment!
 
 If you still have your `node` session running (via `...require('./library')` in this case) in your terminal, when you eval a block of code in your project (`ctrl+b`), you should see the result both in ProtoREPL as well as in your terminal.
-
-For Node development - unlike when targeting the browser - you'll use:
-
-```clj
-(shadow.cljs.devtools.api/node-repl)
-```
-to wake up ProtoREPL to your build. I made the mistake of not eval'ing this and got stuck for a while trying to figure out what I did wrong. Don't be like me. Eval!
-
 
 #### Caveats
 
