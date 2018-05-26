@@ -542,11 +542,12 @@ In either case, If you run into strange issues, you may find it quicker to just 
 (shadow.cljs.devtools.api/node-repl)
 ```
 
-This should get you back in the saddle.
+This should get you back in the saddle. If not, restart `shadow` (`npm run dev`) and run through the 4 steps above.
 
 If you get a warning about an existing `alias`:
 
 - Atom Command Pallet: Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
+
 
 ## References
 
