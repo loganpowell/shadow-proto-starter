@@ -522,7 +522,7 @@ If you still have your `node` session running (via `...require('./library')` in 
 No application has connected to the REPL server. Make sure your JS environment has loaded your compiled ClojureScript code.
 ```
 
-2) ProtoREPL will sometimes kick you out of `(shadow.cljs.devtools.api/node-repl)` and put you back into it's default Clojure REPL. In which case you'll see the following error when trying to eval cljs code:
+2) If you get two consecutive errors while using `shadow.cljs`s REPL, ProtoREPL will kick you out of `(shadow.cljs.devtools.api/node-repl)` and put you back into it's default Clojure REPL. In which case you'll see the following error when trying to eval cljs code:
 
 ```
 CompilerException java.lang.RuntimeException: Unable to resolve symbol: go in this context, compiling:
@@ -530,6 +530,12 @@ CompilerException java.lang.RuntimeException: Unable to resolve symbol: go in th
 
 In either case, If you run into strange issues, you may find it quicker to just use one  the following commands:
 
+Usually it's just a matter of re-entering the shadow REPL:
+```clj
+(shadow.cljs.devtools.api/node-repl)
+```
+
+But, if that doesn't work:
 1) Restart ProtoREPL (close the panel)
 2) Atom Command Pallet: Connect to `Proto Repl: Remote nRepl Connection`
 3) In the ProtoREPL
@@ -537,11 +543,11 @@ In either case, If you run into strange issues, you may find it quicker to just 
 (shadow.cljs.devtools.api/node-repl)
 ```
 
-This should get you back in the saddle. If not, restart `shadow` (`npm run dev`) and run through the 4 steps above.
+This should get you back in the saddle. If not, restart `shadow` (`npm run dev`) and run through the 3 steps above.
 
 If you get a warning about an existing `alias`:
 
-1) Atom Command Pallet: Clear all your namespaces: `Proto Repl: Super Refresh Namespaces`
+1) Atom Command Pallet: Clear your namespaces: `Proto Repl: Refresh Namespaces`
 2) Atom Command Pallet: Clear all values: `Proto Repl: Clear Saved Values`
 3) Atom Command Pallet: Connect to `Proto Repl: Remote nRepl Connection`
 
